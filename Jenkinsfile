@@ -7,8 +7,19 @@ pipeline {
   }
   stages {
     stage('Say Hello') {
-      steps {
-        sh 'echo "hello world"'
+      parallel {
+        stage('Say Hello') {
+          steps {
+            sh 'echo "hello world"'
+          }
+        }
+
+        stage('build app') {
+          steps {
+            sh 'ci/build-app.sh'
+          }
+        }
+
       }
     }
 
